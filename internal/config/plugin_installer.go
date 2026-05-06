@@ -159,15 +159,18 @@ func (pr PluginRepository) Fetch(out io.Writer) PluginPackages {
 	// Handle cases when plugin repo is not available
 	statusCode := resp.StatusCode
 	if statusCode == http.StatusForbidden {
-		fmt.Fprintf(out, "Skipped: Access to plugin repository at %s is forbidden (Status Code: %d).\n", pr, statusCode)
+		fmt.Fprintf(out, "Skipped: %s\n", pr)
+		fmt.Fprintf(out, " Reason: Access to plugin repository is forbidden (Status Code: %d)\n", statusCode)
 		return PluginPackages{}
 	}
 	if statusCode == http.StatusNotFound {
-		fmt.Fprintf(out, "Skipped: Plugin repository not found at %s (Status Code: %d).\n", pr, statusCode)
+		fmt.Fprintf(out, "Skipped: %s\n", pr)
+		fmt.Fprintf(out, " Reason: Plugin repository not found (Status Code: %d)\n", statusCode)
 		return PluginPackages{}
 	}
 	if statusCode != http.StatusOK {
-		fmt.Fprintf(out, "Skipped: Unexpected status code %d from plugin repository at %s.\n", statusCode, pr)
+		fmt.Fprintf(out, "Skipped: %s\n", pr)
+		fmt.Fprintf(out, " Reason: Unexpected status (Status Code: %d)\n", statusCode)
 		return PluginPackages{}
 	}
 
