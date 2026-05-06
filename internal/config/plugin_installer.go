@@ -159,7 +159,7 @@ func (pr PluginRepository) Fetch(out io.Writer) PluginPackages {
 
 	var plugins PluginPackages
 	if err := decoder.Decode(&plugins); err != nil {
-		fmt.Fprintln(out, "Failed to decode repository data [", pr, "]:\n", err)
+		fmt.Fprintln(out, "Failed to decode repository data [", pr, "]:\n", resp.Body, "]:\n", err)
 		return PluginPackages{}
 	}
 	if len(plugins) > 0 {
